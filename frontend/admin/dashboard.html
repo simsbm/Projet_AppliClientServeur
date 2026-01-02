@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - School Management System</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Administration Portal</h1>
+            <div class="user-info">
+                <span class="user-name" id="userName"></span>
+                <button class="btn-logout" onclick="handleLogout('admin')">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h2>Administration Dashboard</h2>
+            <p>Manage students, payments, classes, and generate documents</p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <a href="manage-accounts.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+                <span>👥</span> Manage Accounts (Create Admin/Teacher)
+            </a>
+        </div>
+
+        <div class="dashboard-nav">
+            <button class="nav-btn active" data-section="students">📚 Students</button>
+            <button class="nav-btn" data-section="payments">💳 Record Payment</button>
+            <button class="nav-btn" data-section="classes">🏫 Classes</button>
+            <button class="nav-btn" data-section="teachers">👩‍🏫 Teachers</button>
+            <button class="nav-btn" data-section="documents">📄 Documents</button>
+        </div>
+
+        <!-- Students Section -->
+        <div id="students-section" class="section active">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">All Students</h3>
+                </div>
+                <div id="studentsContent">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading students...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Section -->
+        <div id="payments-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Record Student Payment</h3>
+                </div>
+                <p style="margin-bottom: 20px; color: #7f8c8d;">
+                    Record payments made by students at the bank. All fields are required.
+                </p>
+                <div id="alert" class="alert"></div>
+                <form id="paymentForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="matricule">Student Matricule *</label>
+                            <input type="text" id="matricule" placeholder="e.g., STU20241234567" required>
+                            <small style="color: #7f8c8d; font-size: 12px;">Enter the student's unique matricule number</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="receipt_number">Receipt Number *</label>
+                            <input type="text" id="receipt_number" placeholder="e.g., REC2024001" required>
+                            <small style="color: #7f8c8d; font-size: 12px;">Bank receipt reference number</small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="bank_name">Bank Name *</label>
+                            <input type="text" id="bank_name" placeholder="e.g., Afriland First Bank" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount (XAF) *</label>
+                            <input type="number" id="amount" min="1" step="0.01" placeholder="e.g., 100000" required>
+                            <small style="color: #7f8c8d; font-size: 12px;">Payment amount in CFA Francs</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment_date">Payment Date *</label>
+                        <input type="date" id="payment_date" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="padding: 12px 30px; font-size: 16px;">
+                        Record Payment
+                    </button>
+                </form>
+            </div>
+
+            <div class="card" style="margin-top: 30px; background: #e8f5e9; border-left: 4px solid var(--success-color);">
+                <h4 style="color: var(--success-color); margin-bottom: 10px;">💡 Payment Rules</h4>
+                <ul style="margin: 0; padding-left: 20px; color: var(--dark-text);">
+                    <li>Payment amount cannot exceed the student's remaining balance</li>
+                    <li>Each receipt number must be unique</li>
+                    <li>Financial status updates automatically based on total paid</li>
+                    <li>Students can be assigned to classes only after at least one payment</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Classes Section -->
+        <div id="classes-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Available Classes</h3>
+                </div>
+                <div id="classesContent">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading classes...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 30px;">
+                <div class="card-header">
+                    <h3 class="card-title">Assign Student to Class</h3>
+                </div>
+                <p style="margin-bottom: 20px; color: #7f8c8d;">
+                    Assign a student to a class. Students must have made at least one payment before assignment.
+                </p>
+                <form id="assignClassForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="assign_matricule">Student Matricule *</label>
+                            <input type="text" id="assign_matricule" placeholder="Enter student matricule" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="class_id">Select Class *</label>
+                            <select id="class_id" required>
+                                <option value="">Loading classes...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="padding: 12px 30px;">
+                        ✓ Assign to Class
+                    </button>
+                </form>
+            </div>
+
+            <div class="card" style="margin-top: 30px; background: #fff3cd; border-left: 4px solid var(--warning-color);">
+                <h4 style="color: #856404; margin-bottom: 10px;">Assignment Requirements</h4>
+                <ul style="margin: 0; padding-left: 20px; color: var(--dark-text);">
+                    <li>Student must have made at least one payment</li>
+                    <li>Class must not be at full capacity</li>
+                    <li>Only students with payments appear in class lists for teachers</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Teachers Section -->
+        <div id="teachers-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">All Teachers</h3>
+                </div>
+                <div id="teachersContent">
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Loading teachers...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 30px;">
+                <div class="card-header">
+                    <h3 class="card-title">🔗 Assign Teacher to Class</h3>
+                </div>
+                <p style="margin-bottom: 20px; color: #7f8c8d;">
+                    Assign a teacher to a specific class and subject.
+                </p>
+                <form id="assignTeacherForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="teacher_id">Select Teacher *</label>
+                            <select id="teacher_id" required>
+                                <option value="">Loading teachers...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="teacher_class_id">Select Class *</label>
+                            <select id="teacher_class_id" required>
+                                <option value="">Loading classes...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subject_id">Select Subject *</label>
+                            <select id="subject_id" required>
+                                <option value="">Loading subjects...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="padding: 12px 30px;">
+                        ✓ Assign to Class
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Documents Section -->
+        <div id="documents-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"> Generate Official Documents</h3>
+                </div>
+                <p style="margin-bottom: 20px; color: #7f8c8d;">
+                    Generate certificates and transcripts for students. <strong>Documents can only be generated for students with SOLDÉ financial status.</strong>
+                </p>
+                
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="doc_matricule">Student Matricule</label>
+                        <input type="text" id="doc_matricule" placeholder="Enter student matricule" 
+                               style="max-width: 400px;">
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button onclick="generateDocument('certificate')" class="btn btn-primary" 
+                            style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;">
+                        <span>🎓</span> Generate Certificate
+                    </button>
+                    <button onclick="generateDocument('transcript')" class="btn btn-success"
+                            style="display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;">
+                        <span></span> Generate Transcript
+                    </button>
+                </div>
+
+                <div id="documentResult" style="margin-top: 30px;"></div>
+            </div>
+
+            <div class="card" style="margin-top: 30px; background: #d1ecf1; border-left: 4px solid #0c5460;">
+                <h4 style="color: #0c5460; margin-bottom: 10px;">ℹ️ Document Information</h4>
+                <ul style="margin: 0; padding-left: 20px; color: var(--dark-text);">
+                    <li><strong>School Certificate:</strong> Official document confirming enrollment and financial status</li>
+                    <li><strong>Transcript:</strong> Complete academic record with all grades and subjects</li>
+                    <li>Documents can only be generated for students who have paid all tuition fees (SOLDÉ status)</li>
+                    <li>In production, these would generate signed PDF documents</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for student details -->
+    <div id="studentModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>Student Details</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="studentModalContent">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/admin-dashboard.js"></script>
+</body>
+</html>

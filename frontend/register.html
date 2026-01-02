@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Pre-Registration</title>
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box" style="max-width: 600px;">
+            <div class="login-header">
+                <span class="portal-badge student">Student Pre-Registration</span>
+                <h1>Register</h1>
+                <p class="login-description">Complete the form below to get your matricule</p>
+            </div>
+
+            <div id="alert" class="alert"></div>
+            
+            <div id="registrationForm">
+                <form id="registerForm" class="login-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first_name">First Name *</label>
+                            <input type="text" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Last Name *</label>
+                            <input type="text" id="last_name" name="last_name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="date_of_birth">Date of Birth</label>
+                        <input type="date" id="date_of_birth" name="date_of_birth">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address" rows="3" style="resize: vertical;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" name="password" required minlength="6">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm Password *</label>
+                        <input type="password" id="confirm_password" name="confirm_password" required>
+                    </div>
+
+                    <button type="submit" class="btn-login" id="registerBtn">Register</button>
+                </form>
+
+                <div class="login-footer">
+                    <p>Already have a matricule? <a href="student/login.html">Login here</a></p>
+                    <p><a href="index.html">← Back to Home</a></p>
+                </div>
+            </div>
+
+            <div id="successMessage" style="display: none; text-align: center;">
+                <div style="font-size: 64px; color: var(--success-color); margin-bottom: 20px;">✓</div>
+                <h2 style="color: var(--success-color); margin-bottom: 15px;">Registration Successful!</h2>
+                <p style="margin-bottom: 10px;">Your matricule is:</p>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <h1 id="matriculeDisplay" style="color: var(--primary-color); font-size: 32px;"></h1>
+                </div>
+                <p style="color: #e74c3c; font-weight: 600; margin-bottom: 20px;">⚠️ Please save this matricule. You will need it to login.</p>
+                <a href="student/login.html" class="btn-login" style="display: inline-block; width: auto; padding: 12px 30px;">Go to Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match!', 'error');
+                return;
+            }
+            
+            const formData = {
+                first_name: document.getElementById('first_name').value,
+                last_name: document.getElementById('last_name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                date_of_birth: document.getElementById('date_of_birth').value,
+                address: document.getElementById('address').value,
+                password: password
+            };
+            
+            const registerBtn = document.getElementById('registerBtn');
+            setButtonLoading(registerBtn, true);
+            
+            try {
+                const response = await fetch(API_ENDPOINTS.AUTH.REGISTER_STUDENT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.message || 'Registration failed');
+                }
+                
+                // Show success message
+                document.getElementById('registrationForm').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('matriculeDisplay').textContent = data.data.matricule;
+                
+            } catch (error) {
+                showAlert(error.message, 'error');
+            } finally {
+                setButtonLoading(registerBtn, false);
+            }
+        });
+    </script>
+</body>
+</html>

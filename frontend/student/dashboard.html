@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Student Portal</h1>
+            <div class="user-info">
+                <span class="user-name" id="userName"></span>
+                <button class="btn-logout" onclick="handleLogout('student')">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h2>Welcome Back!</h2>
+            <p>View your academic information and financial status</p>
+        </div>
+
+        <div class="dashboard-nav">
+            <button class="nav-btn active" data-section="profile">Profile</button>
+            <button class="nav-btn" data-section="grades">My Grades</button>
+            <button class="nav-btn" data-section="timetable">Timetable</button>
+            <button class="nav-btn" data-section="payments">Payment History</button>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile-section" class="section active">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Personal Information</h3>
+                </div>
+                <div id="profileContent"></div>
+            </div>
+        </div>
+
+        <!-- Grades Section -->
+        <div id="grades-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Academic Grades</h3>
+                </div>
+                <div id="gradesContent"></div>
+            </div>
+        </div>
+
+        <!-- Timetable Section -->
+        <div id="timetable-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Class Timetable</h3>
+                </div>
+                <div id="timetableContent"></div>
+            </div>
+        </div>
+
+        <!-- Payments Section -->
+        <div id="payments-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Payment History</h3>
+                </div>
+                <div id="paymentsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/student-dashboard.js"></script>
+</body>
+</html>

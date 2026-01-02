@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/common.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Teacher Portal</h1>
+            <div class="user-info">
+                <span class="user-name" id="userName"></span>
+                <button class="btn-logout" onclick="handleLogout('teacher')">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container dashboard">
+        <div class="dashboard-header">
+            <h2>Teacher Dashboard</h2>
+            <p>Manage your classes and enter student grades</p>
+        </div>
+
+        <div class="dashboard-nav">
+            <button class="nav-btn active" data-section="classes">My Classes</button>
+            <button class="nav-btn" data-section="grades">Enter Grades</button>
+            <button class="nav-btn" data-section="subjects">My Subjects</button>
+        </div>
+
+        <!-- Classes Section -->
+        <div id="classes-section" class="section active">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Assigned Classes</h3>
+                </div>
+                <div id="classesContent"></div>
+            </div>
+        </div>
+
+        <!-- Grades Section -->
+        <div id="grades-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Enter Student Grades</h3>
+                </div>
+                <div id="alert" class="alert"></div>
+                <form id="gradeForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="student_id">Student *</label>
+                            <select id="student_id" required>
+                                <option value="">Select a class first...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject_id">Subject *</label>
+                            <select id="subject_id" required></select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="grade">Grade (0-100) *</label>
+                            <input type="number" id="grade" min="0" max="100" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exam_type">Exam Type *</label>
+                            <select id="exam_type" required>
+                                <option value="">Select type</option>
+                                <option value="Quiz">Quiz</option>
+                                <option value="Midterm">Midterm</option>
+                                <option value="Final">Final</option>
+                                <option value="Assignment">Assignment</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="academic_year">Academic Year *</label>
+                            <input type="text" id="academic_year" value="2024-2025" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="semester">Semester *</label>
+                            <select id="semester" required>
+                                <option value="">Select semester</option>
+                                <option value="Fall 2024">Fall 2024</option>
+                                <option value="Spring 2025">Spring 2025</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit Grade</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Subjects Section -->
+        <div id="subjects-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Subjects I Teach</h3>
+                </div>
+                <div id="subjectsContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for class students -->
+    <div id="studentsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Class Students</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="studentsModalContent"></div>
+        </div>
+    </div>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/teacher-dashboard.js"></script>
+</body>
+</html>

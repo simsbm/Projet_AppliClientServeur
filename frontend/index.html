@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System</title>
+    <link rel="icon" type="image/png" href="../backend/assets/logo-copie.png">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .portals {
+            max-width: 1200px;
+            margin: -50px auto 50px;
+            padding: 0 20px;
+        }
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .portal-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .portal-card:hover {
+            transform: translateY(-10px);
+        }
+        .portal-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        .portal-card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .portal-card p {
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        .portal-link {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .student-link {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        .student-link:hover {
+            background: #1976d2;
+            color: white;
+        }
+        .admin-link {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+        .admin-link:hover {
+            background: #c2185b;
+            color: white;
+        }
+        .teacher-link {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+        .teacher-link:hover {
+            background: #388e3c;
+            color: white;
+        }
+        .register-section {
+            background: #f8f9fa;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .register-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <img src="C:\Users\HP\Desktop\projetSchool\frontend\assets\logo.png" width="100px" height="100px" alt="School Logo">
+        <h1>School Management System</h1>
+        <p>Comprehensive education management platform</p>
+    </div>
+
+    <div class="portals">
+        <div class="portal-grid">
+            <div class="portal-card">
+                <img class="portal-icon" src="./assets/graduating-student.png" alt="Student Icon" width="60px" height="60px">
+                <h2>Student Portal</h2>
+                <p>Access your grades, timetable, and financial information</p>
+                <a href="student/login.html" class="portal-link student-link">Student Login</a>
+            </div>
+
+            <div class="portal-card">
+              <img src="./assets/software-engineer.png" width="60px" height="60px" alt="">
+                <h2>Administration Portal</h2>
+                <p>Manage students, payments, classes, and documents</p>
+                <a href="admin/login.html" class="portal-link admin-link">Admin Login</a>
+            </div>
+
+            <div class="portal-card">
+                <img src="./assets/training.png" alt="" width="60px" height="60px">
+                <h2>Teacher Portal</h2>
+                <p>View classes, manage student lists, and enter grades</p>
+                <a href="teacher/login.html" class="portal-link teacher-link">Teacher Login</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="register-section">
+        <h2>New Student?</h2>
+        <p>Pre-register to get your matricule and access the system</p>
+        <a href="register.html" class="btn btn-primary" style="margin-top: 20px;">Pre-Register Now</a>
+    </div>
+    <div>
+        <footer style="text-align: center; padding: 20px; background-color: #f1f1f1; margin-top: 40px;">
+            <p>&copy; 2023 School Management System. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
