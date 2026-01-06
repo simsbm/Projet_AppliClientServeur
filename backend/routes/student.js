@@ -15,4 +15,5 @@ router.get('/grades', studentController.getGrades);
 router.get('/timetable', studentController.getTimetable);
 router.get('/payments', studentController.getPaymentHistory);
 
+
 module.exports = router;
