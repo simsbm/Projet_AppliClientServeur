@@ -4,140 +4,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Management System</title>
-    <link rel="icon" type="image/png" href="../backend/assets/logo-copie.png">
-    <link rel="stylesheet" href="assets/css/common.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-color: #2563eb;       /* Modern Royal Blue */
+            --primary-dark: #1e40af;        /* Darker Blue for hover */
+            --secondary-bg: #f8fafc;        /* Very light gray/blue background */
+            --text-dark: #1e293b;           /* Slate color (softer than pure black) */
+            --text-light: #64748b;          /* Muted text */
+            --white: #ffffff;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 16px;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--secondary-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: var(--white);
+            padding: 100px 20px 140px; /* Extra bottom padding for overlap effect */
             text-align: center;
+            position: relative;
+            clip-path: ellipse(150% 100% at 50% 0%); /* Creates a subtle curve at bottom */
         }
-        .hero h1 {
-            font-size: 48px;
+
+        .hero-logo-icon {
+            font-size: 60px;
             margin-bottom: 20px;
+            color: rgba(255,255,255,0.9);
         }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--white);
+            letter-spacing: -0.5px;
+        }
+
         .hero p {
-            font-size: 18px;
+            font-size: 1.1rem;
             opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
+
+        /* Portals Section */
         .portals {
             max-width: 1200px;
-            margin: -50px auto 50px;
+            margin: -80px auto 60px; /* Negative margin pulls it up into the hero */
             padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
+
         .portal-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
         }
+
         .portal-card {
-            background: white;
-            border-radius: 12px;
-            padding: 40px;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 40px 30px;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
         .portal-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(37, 99, 235, 0.25); /* Blue glow on hover */
         }
-        .portal-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 25px;
         }
+
+        /* Specific Styling for Icons */
+        .icon-student { background: #eff6ff; color: #3b82f6; }
+        .icon-admin { background: #fdf2f8; color: #db2777; }
+        .icon-teacher { background: #f0fdf4; color: #16a34a; }
+
         .portal-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .portal-card p {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            flex-grow: 1; /* Pushes button to bottom aligned */
+        }
+
+        /* Modern Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-outline {
+            border: 2px solid #e2e8f0;
+            background: transparent;
+            color: var(--text-dark);
+            width: 100%;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: #eff6ff;
+        }
+
+        /* Registration Section */
+        .register-section {
+            background: var(--white);
+            padding: 80px 20px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .register-box {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .register-section h2 {
             color: var(--primary-color);
             margin-bottom: 15px;
         }
-        .portal-card p {
-            color: #7f8c8d;
-            margin-bottom: 25px;
-        }
-        .portal-link {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-        .student-link {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-        .student-link:hover {
-            background: #1976d2;
+        
+        .btn-primary {
+            background-color: var(--primary-color);
             color: white;
+            margin-top: 25px;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
         }
-        .admin-link {
-            background: #fce4ec;
-            color: #c2185b;
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
         }
-        .admin-link:hover {
-            background: #c2185b;
-            color: white;
-        }
-        .teacher-link {
-            background: #e8f5e9;
-            color: #388e3c;
-        }
-        .teacher-link:hover {
-            background: #388e3c;
-            color: white;
-        }
-        .register-section {
-            background: #f8f9fa;
-            padding: 60px 20px;
+
+        /* Footer */
+        footer {
             text-align: center;
+            padding: 40px 20px;
+            background-color: var(--white);
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
         }
-        .register-section h2 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
+
+        /* Mobile Responsive Tweaks */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .hero { padding-bottom: 80px; clip-path: none; }
+            .portals { margin-top: -40px; }
         }
     </style>
 </head>
 <body>
-    <div class="hero">
-        <img src="./assets/logo.png" width="auto" height="100px" alt="School Logo">
+
+    <header class="hero">
+        <i class="fas fa-school hero-logo-icon"></i> 
         <h1>School Management System</h1>
-        <p>Comprehensive education management platform</p>
-    </div>
+        <p>A comprehensive, secure, and user-friendly platform for modern education management.</p>
+    </header>
 
-    <div class="portals">
+    <main class="portals">
         <div class="portal-grid">
+            
             <div class="portal-card">
-                <img class="portal-icon" src="./assets/graduating-student.png" alt="Student Icon" width="60px" height="60px">
+                <div class="icon-circle icon-student">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
                 <h2>Student Portal</h2>
-                <p>Access your grades, timetable, and financial information</p>
-                <a href="student/login.html" class="portal-link student-link">Student Login</a>
+                <p>Access your curriculum, view grades, check timetables, and manage financial status.</p>
+                <a href="student/login.html" class="btn btn-outline">Student Login</a>
             </div>
 
             <div class="portal-card">
-              <img src="./assets/software-engineer.png" width="60px" height="60px" alt="">
-                <h2>Administration Portal</h2>
-                <p>Manage students, payments, classes, and documents</p>
-                <a href="admin/login.html" class="portal-link admin-link">Admin Login</a>
+                <div class="icon-circle icon-admin">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <h2>Administration</h2>
+                <p>Full control over student enrollment, payments, documentation, and system settings.</p>
+                <a href="admin/login.html" class="btn btn-outline">Admin Login</a>
             </div>
 
             <div class="portal-card">
-                <img src="./assets/training.png" alt="" width="60px" height="60px">
+                <div class="icon-circle icon-teacher">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
                 <h2>Teacher Portal</h2>
-                <p>View classes, manage student lists, and enter grades</p>
-                <a href="teacher/login.html" class="portal-link teacher-link">Teacher Login</a>
+                <p>Manage your classes, record attendance, input grades, and communicate with students.</p>
+                <a href="teacher/login.html" class="btn btn-outline">Teacher Login</a>
             </div>
-        </div>
-    </div>
 
-    <div class="register-section">
-        <h2>New Student?</h2>
-        <p>Pre-register to get your matricule and access the system</p>
-        <a href="register.html" class="btn btn-primary" style="margin-top: 20px;">Pre-Register Now</a>
-    </div>
-    <div>
-        <footer style="text-align: center; padding: 20px; background-color: #f1f1f1; margin-top: 40px;">
-            <p>&copy; 2025 School Management System. All rights reserved.</p>
-        </footer>
-    </div>
+        </div>
+    </main>
+
+    <section class="register-section">
+        <div class="register-box">
+            <h2>Not registered yet?</h2>
+            <p>New students must pre-register to obtain a matricule number before accessing the student portal.</p>
+            <a href="register.html" class="btn btn-primary">Pre-Register Now <i class="fas fa-arrow-right" style="margin-left: 8px;"></i></a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 School Management System. All rights reserved.</p>
+    </footer>
+
 </body>
 </html>
